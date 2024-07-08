@@ -25,5 +25,14 @@ class Birds(Resource):
         birds = [bird.to_dict() for bird in Bird.query.all()]
         return make_response(jsonify(birds), 200)
 
-api.add_resource(Birds, '/birds')
 
+
+class BirdById(Resource):
+    def get(self, bird_id):
+        bird = Bird.query.filter(Bird.id == bird_id).first()
+        bird_dict = bird.to_dict()
+        return make_response(jsonify(bird_dict), 200)
+    
+
+api.add_resource(Birds, '/birds')    
+api.add_resource(BirdById, '/birds/<int:bird_id>')
